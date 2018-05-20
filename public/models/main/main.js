@@ -1,4 +1,4 @@
-var appT = angular.module('2ledger-sample-history');
+var appT = angular.module('2ledger-sample-car-tracking');
 
 appT.controller('main', main)
 
@@ -203,7 +203,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'GET',
-            url: "/history/getAllParts",
+            url: "/carTracking/getAllParts",
             headers: { 'Content-Type': 'application/json' },
         }
 
@@ -489,7 +489,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'POST',
-            url: "/history/moveCar",
+            url: "/carTracking/moveCar",
             headers: { 'Content-Type': 'application/json' },
             data: {
                 data: {
@@ -998,7 +998,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'GET',
-            url: "/history/verifyCar/" + me.codeCar,
+            url: "/carTracking/verifyCar/" + me.codeCar,
             headers: { 'Content-Type': 'application/json' }
         }
 
@@ -1031,7 +1031,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'POST',
-            url: "/history/saveCar",
+            url: "/carTracking/saveCar",
             headers: { 'Content-Type': 'application/json' },
             data: {
                 data: {
@@ -1078,7 +1078,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'DELETE',
-            url: "/history/deletePart",
+            url: "/carTracking/deletePart",
             headers: { 'Content-Type': 'application/json' },
             data: {
                 id: ind.id,
@@ -1149,7 +1149,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'POST',
-            url: "/history/savePart",
+            url: "/carTracking/savePart",
             headers: { 'Content-Type': 'application/json' },
             data: {
                 id: me.idPart,
@@ -1185,7 +1185,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
     me.getToken = function () {
         var rest = {
             method: 'GET',
-            url: "/history/getToken/",
+            url: "/carTracking/getToken/",
             headers: { 'Content-Type': 'application/json' },
         }
 

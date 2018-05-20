@@ -1,6 +1,6 @@
-var appT = angular.module('2ledger-sample-history', ['ngMaterial', 'ngRoute', 'historyServices', 'ngLocale', 'ui.bootstrap', 'ngTable']);
+var appT = angular.module('2ledger-sample-car-tracking', ['ngMaterial', 'ngRoute', 'carTrackingServices', 'ngLocale', 'ui.bootstrap', 'ngTable']);
 
-appT.controller('historyController', function ($scope, $http, $timeout, $rootScope, $route, $routeParams, $location) {
+appT.controller('carTrackingController', function ($scope, $http, $timeout, $rootScope, $route, $routeParams, $location) {
 
 	$scope.$route = $route;
 	$scope.$location = $location;

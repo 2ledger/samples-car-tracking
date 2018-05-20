@@ -132,7 +132,7 @@ module.exports = function (app) {
 				path: '/v1/login',
 				headers: {
 					'Content-Type': 'application/json',
-					'Authorization': 'Basic YWRtX1VzZXJNYW5hZ2VyQGdtYWlsLmNvbToxMjM0NTY='
+					'Authorization': 'Basic ' + global.cfg.API_2LEDGER_BASIC_LOGIN
 				}
 			};
 

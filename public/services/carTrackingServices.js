@@ -1,4 +1,4 @@
-var appT = angular.module('historyServices', []);
+var appT = angular.module('carTrackingServices', []);
 
 appT.service('jwt', function () {
     var jwt = '';

@@ -1,11 +1,11 @@
 module.exports = function(app) {
-	var history = app.controllers.historyController;
+	var carTracking = app.controllers.carTrackingController;
 
-	app.get('/history/getToken', history.getToken);
-	app.get('/history/getAllParts', history.getAllParts);
-	app.get('/history/verifyCar/:siglaCar', history.verifyCar);	
-	app.post('/history/savePart' , history.savePart);
-	app.post('/history/moveCar' , history.moveCar);
-	app.post('/history/saveCar' , history.saveCar);
-	app.delete('/history/deletePart', history.deletePart);
+	app.get('/carTracking/getToken', carTracking.getToken);
+	app.get('/carTracking/getAllParts', carTracking.getAllParts);
+	app.get('/carTracking/verifyCar/:siglaCar', carTracking.verifyCar);	
+	app.post('/carTracking/savePart' , carTracking.savePart);
+	app.post('/carTracking/moveCar' , carTracking.moveCar);
+	app.post('/carTracking/saveCar' , carTracking.saveCar);
+	app.delete('/carTracking/deletePart', carTracking.deletePart);
 };

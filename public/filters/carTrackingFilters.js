@@ -1,4 +1,4 @@
-var appF = angular.module('historyFilters', []);
+var appF = angular.module('carTrackingFilters', []);
 
 appF.filter("formatDataTimeline", function () {
     return function (valor) {
