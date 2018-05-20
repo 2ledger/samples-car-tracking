@@ -1,0 +1,592 @@
+<div ng-controller="main as cx" layout="column" class="container-fluid screenManager" style="height: calc(100vh - 113px);color:#FFFFFF">
+
+    <div layout="row" class="alert">
+        <div layout="row" style="    width: 50px;height: 39px;border-radius: 50px;position: relative;color: #FFFFFF;    padding-top: 6px; padding-left: 3px;">
+            <i class="fa fa-check" aria-hidden="true" style="font-size: 49px;width: 50px;"></i>
+            <div flex style="    min-width: 184px;    font-weight: 700;    font-size: 13px;    margin-top: 18px;    margin-left: 10px; margin-right: 10px;">{{cx.responseText}}</div>
+        </div>
+    </div>
+
+    <div layout="row" class="error">
+        <div layout="row" style="    width: 50px;height: 39px;border-radius: 50px;position: relative;color: #FFFFFF;    padding-top: 22px;padding-left: 20px;">
+            <i class="fa fa-times" aria-hidden="true" style="font-size: 49px;width: 50px;"></i>
+            <div flex style="    min-width: 184px;    font-weight: 700;    font-size: 13px;    margin-top: 18px;    margin-left: 10px; margin-right: 10px;">{{cx.errorMessage}}</div>
+        </div>
+    </div>
+
+    <div flex ng-show="cx.showWaiting == true" layout="row" style="border-radius: 5px;position: relative;text-align: center;height: 250px;background-color: rgb(255, 255, 255);width: 250px;z-index: 999999999;max-height: 250px;transform: translate(-50%,-50%);top: 50%;left: 50%;">
+        <div style="    width: 50px;height: 39px;border-radius: 50px;transform: translate(-50%,-50%);top: 50%;margin-top: -23px;left: 50%;position: relative;">
+            <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true" style="color: #2d9fc3;font-size: 49px;"></i>
+            <div class="loadingText" style="opacity: 0; margin-left: -53px;    width: 153px;">{{cx.loadingText}}</div>
+        </div>
+    </div>
+
+    <div ng-show="cx.showWaiting == false" class="" style="height: calc(100vh - 113px);">
+
+        <div layout="row" style="height: calc(100vh - 113px);">
+            <div flex style="overflow: hidden;border-right: 1px solid #ffffff0a;">
+                <div flex layout="column">
+                    <i class="fa fa-industry" aria-hidden="true" style="    font-size: 35px;text-align: center;"></i>
+                    <div flex layout="row" style="margin-left: 10px;margin-right: 10px;margin-top: 8px;margin-top: 8px;border-bottom: 1px solid #FFFFFF;padding-bottom: 8px;">
+                        <div flex style="font-weight: 600;text-align:center;padding-left: 25px;">Factories</div>
+
+                        <button style="border: 0px;background-color: #566a7d00;" ng-click="cx.addFactory()">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div style="height: calc(100vh - 188px); overflow: auto;">
+                    <div class="placeFactory" ng-mouseover="itm.showOpt = true" ng-mouseout="itm.showOpt = false" ng-repeat="itm in cx.listParts | filter:'factory'"
+                        style="    border-radius: 5px;background-color: #213140;margin:10px; margin-bottom: 12px;">
+                        <div layout="column" class="boxItm">
+                            <div ng-show="itm.showOpt == true" style="position: relative;    margin-left: calc(100% - 39px); margin-top: -21px;height: 21px;">
+                                <div class="boxOptions" style="font-size: 11px;overflow: hidden;">
+                                    <button class="buttonPlus" ng-click="cx.editPart(itm)">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </button>
+                                    <button class="buttonPlus" ng-click='cx.removePart(itm)'>
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div flex layout="row">
+                                <img style="    margin-top: -5px;width: 40px;max-width: 40px;max-height: 40px;margin-left: 1px;    border:2px solid #6c6d6f42;height: 40px;"
+                                    ng-src="{{itm.photo}}" />
+                                <div layout="column" flex style="padding-left: 8px;    margin-top: -8px;max-height: 41px;">
+                                    <div flex style="font-weight: 600;font-size: 13px;margin-top: 2px;margin-bottom: 9px;">{{itm.name}}</div>
+                                    <div flex style="font-size: 11px;color: #2d9fc3;">
+                                        <img ng-src="{{itm.urlFlag}}" style="height: 20px;margin-right: 5px;margin-top: -3px;" />{{itm.zipCode}}</div>
+                                </div>
+
+                                <button ng-show='itm.expand == false' class="buttonPlus" ng-click="cx.addCar(itm)">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+                                <button class="buttonPlus" ng-click='cx.showAssets(itm)' ng-show="itm.assets.length > 0">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div ng-show='itm.expand == true' style="margin-top: 6px;height:0px;position: relative;margin-left: calc(50% - 40px);margin-bottom:-4px;position: relative;">
+                                <div class="carsAvailable">{{itm.assets.length}} Cars Available</div>
+                            </div>
+
+                            <div ng-show='itm.expand == true' style="margin-top: 4px;height:0px;position: relative;margin-left: calc(100% - 49px);margin-bottom: -4px;position: relative;">
+                                <button class="carsAvailable btCarsAvaiable" style="background-color: #599041;width: 49px; padding-right: 9px;outline:none"
+                                    ng-click="cx.addCar(itm)">+ add</button>
+                            </div>
+
+                            <div ng-show='itm.expand == true' style="border-top: 1px solid rgba(255, 255, 255, 0.16);padding: 10px;padding-top: 20px;margin-top: 14px;"
+                                ng-show="itm.assets.length > 0">
+                                <div ng-repeat="ass in itm.assets" id="{{ ass }}" style="margin-bottom: 12px;" draggable item="ass">
+                                    <div layout="row" class="itmAsset">
+                                        <div flex layout="column" style="    padding: 10px;">
+                                            <img ng-show="ass.details.photo != 'assets/noPhoto.jpg'" class="imageItmAsset" ng-src="{{ass.details.photo}}" />
+                                            <div ng-show="ass.details.photo == 'assets/noPhoto.jpg'" style="overflow: hidden;margin-bottom: 11px;border-bottom: 4px solid #288aab;text-align: center;max-height: 89px;margin-top: -9px;margin-left: -10px;margin-right: -10px;background-color: #eeeeee;">
+                                                <img class="imageItmAsset" ng-src="{{ass.details.photo}}" style="margin-top: -11px;border-bottom: 0px;height: 122px;max-height: 110px;"
+                                                />
+                                            </div>
+                                            <div layout="row" style="margin-bottom: 2px;   ">
+                                                <div flex style="font-weight: 700;font-size: 13px;margin-bottom: 10px;">{{ass.details.name}}</div>
+
+                                                <button ng-click="cx.showDetails(ass)" class="btn btn-default btInfo" type="button" style="    z-index: 999999;border-radius: 31px;width: 31px;border: 0px;margin-top: -28px;margin-right: -3px;background-color: #2d9fc3;height: 31px;color: #FFFFFF;outline: none;box-shadow: 1px 1px 4px #33333378;">
+                                                    <i class="fa fa-info" aria-hidden="true"></i>
+                                                </button>
+
+                                            </div>
+                                            <div layout="row" style="font-size: 11px;margin-right: 5px;margin-top:-5px;">
+                                                <div flex>{{ass.details.year}}</div>
+                                                <div>{{ass.details.doors}} doors</div>
+                                            </div>
+                                            <div style="text-align: right;font-size: 12px;font-weight: 700;margin-top: 8px;margin-right: 5px;color: #4d7784;">{{ass.details.price | currency:"U$ "}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div flex style="overflow: hidden;border-right: 1px solid #ffffff0a;" class="boxDealership">
+                <div flex layout="column">
+                    <i class="fa fa-building" aria-hidden="true" style="    font-size: 35px;text-align: center;"></i>
+                    <div flex layout="row" style="margin-left: 10px;margin-right: 10px;margin-top: 8px;margin-top: 8px;border-bottom: 1px solid #FFFFFF;padding-bottom: 8px;">
+                        <div flex style="font-weight: 600;text-align:center;padding-left: 25px;">Dealerships</div>
+                        <button style="border: 0px;background-color: #566a7d00;" ng-click="cx.addDealership()">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div style="height: calc(100vh - 188px); overflow: auto;">
+                    <div class="placeDealership" ng-mouseover="itm.showOpt = true" ng-mouseout="itm.showOpt = false" ng-repeat="itm in cx.listParts | filter:'dealership'"
+                        style="    border-radius: 5px;background-color: #213140;margin:10px; margin-bottom: 12px;" bin="itm"
+                        id="{{ itm }}" style="margin-bottom: 12px;" droppable drop="cx.handleDrop" habDrop="itm">
+                        <div layout="column" class="boxItm">
+                            <div ng-show="itm.showOpt == true" style="position: relative;    margin-left: calc(100% - 39px); margin-top: -21px;height: 21px;">
+                                <div class="boxOptions" style="font-size: 11px;overflow: hidden;">
+                                    <button class="buttonPlus" ng-click="cx.editPart(itm)">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </button>
+                                    <button class="buttonPlus" ng-click='cx.removePart(itm)'>
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div flex layout="row">
+                                <img style="    margin-top: -5px;width: 40px;max-width: 40px;max-height: 40px;margin-left: 1px;    border:2px solid #6c6d6f42;height: 40px;"
+                                    ng-src="{{itm.photo}}" />
+                                <div layout="column" flex style="padding-left: 8px;    margin-top: -8px;max-height: 41px;">
+                                    <div flex style="font-weight: 600;font-size: 13px;margin-top: 2px;margin-bottom: 9px;">{{itm.name}}</div>
+                                    <div flex style="font-size: 11px;color: #2d9fc3;">
+                                        <img ng-src="{{itm.urlFlag}}" style="height: 20px;margin-right: 5px;margin-top: -3px;" />{{itm.zipCode}}</div>
+                                </div>
+
+                                <button class="buttonPlus cmpListCarsDealership" ng-click='cx.showAssets(itm)' ng-show="itm.assets.length > 0">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="cmpListCarsDealership" ng-show='itm.expand == true' style="margin-top: 6px;height:0px;position: relative;margin-left: calc(50% - 40px);margin-bottom:-4px;position: relative;">
+                                <div class="carsAvailable">{{itm.assets.length}} Cars Available</div>
+                            </div>
+
+                            <div class="cmpListCarsDealership" ng-show='itm.expand == true' style="border-top: 1px solid rgba(255, 255, 255, 0.16);padding: 10px;padding-top: 20px;margin-top: 14px;"
+                                ng-show="itm.assets.length > 0">
+                                <div ng-repeat="ass in itm.assets" id="{{ ass }}" style="margin-bottom: 12px;" draggable item="ass">
+                                    <div layout="row" class="itmAsset">
+                                        <div flex layout="column" style="    padding: 10px;">
+                                            <img ng-show="ass.details.photo != 'assets/noPhoto.jpg'" class="imageItmAsset" ng-src="{{ass.details.photo}}" />
+                                            <div ng-show="ass.details.photo == 'assets/noPhoto.jpg'" style="overflow: hidden;margin-bottom: 11px;border-bottom: 4px solid #288aab;text-align: center;max-height: 89px;margin-top: -9px;margin-left: -10px;margin-right: -10px;background-color: #eeeeee;">
+                                                <img class="imageItmAsset" ng-src="{{ass.details.photo}}" style="margin-top: -11px;border-bottom: 0px;height: 122px;max-height: 110px;"
+                                                />
+                                            </div>
+                                            <div layout="row" style="margin-bottom: 2px;   ">
+                                                <div flex style="font-weight: 700;font-size: 13px;margin-bottom: 10px;">{{ass.details.name}}</div>
+
+                                                <button ng-click="cx.showDetails(ass)" class="btn btn-default btInfo" type="button" style="z-index: 999999;border-radius: 31px;width: 31px;border: 0px;margin-top: -28px;margin-right: -3px;background-color: #2d9fc3;height: 31px;color: #FFFFFF;outline: none;box-shadow: 1px 1px 4px #33333378;">
+                                                    <i class="fa fa-info" aria-hidden="true"></i>
+                                                </button>
+
+                                            </div>
+                                            <div layout="row" style="font-size: 11px;margin-right: 5px;margin-top:-5px;">
+                                                <div flex>{{ass.details.year}}</div>
+                                                <div>{{ass.details.doors}} doors</div>
+                                            </div>
+                                            <div style="text-align: right;font-size: 12px;font-weight: 700;margin-top: 8px;margin-right: 5px;color: #4d7784;">{{ass.details.price | currency:"U$ "}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div flex style="overflow: hidden;border-right: 1px solid #ffffff0a;" class="boxStores">
+
+
+                <div flex layout="column">
+                    <i class="fa fa-car" aria-hidden="true" style="    font-size: 35px;text-align: center;"></i>
+                    <div flex layout="row" style="margin-left: 10px;margin-right: 10px;margin-top: 8px;margin-top: 8px;border-bottom: 1px solid #FFFFFF;padding-bottom: 8px;">
+                        <div flex style="font-weight: 600;text-align:center;padding-left: 25px;">Stores</div>
+                        <button style="border: 0px;background-color: #566a7d00;" ng-click="cx.addStores()">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div style="height: calc(100vh - 188px); overflow: auto;">
+                    <div class="placeStore" ng-mouseover="itm.showOpt = true" ng-mouseout="itm.showOpt = false" ng-repeat="itm in cx.listParts | filter:'store'"
+                        style="    border-radius: 5px;background-color: #213140;margin:10px; margin-bottom: 12px;" bin="itm"
+                        id="{{ itm }}" style="margin-bottom: 12px;" droppable drop="cx.handleDrop" habDrop="itm">
+                        <div layout="column" class="boxItm">
+                            <div ng-show="itm.showOpt == true" style="position: relative;    margin-left: calc(100% - 39px); margin-top: -21px;height: 21px;">
+                                <div class="boxOptions" style="font-size: 11px;overflow: hidden;">
+                                    <button class="buttonPlus" ng-click="cx.editPart(itm)">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </button>
+                                    <button class="buttonPlus" ng-click='cx.removePart(itm)'>
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div flex layout="row">
+                                <img style="    margin-top: -5px;width: 40px;max-width: 40px;max-height: 40px;margin-left: 1px;    border:2px solid #6c6d6f42;height: 40px;"
+                                    ng-src="{{itm.photo}}" />
+                                <div layout="column" flex style="padding-left: 8px;    margin-top: -8px;max-height: 41px;">
+                                    <div flex style="font-weight: 600;font-size: 13px;margin-top: 2px;margin-bottom: 9px;">{{itm.name}}</div>
+                                    <div flex style="font-size: 11px;color: #2d9fc3;">
+                                        <img ng-src="{{itm.urlFlag}}" style="height: 20px;margin-right: 5px;margin-top: -3px;" />{{itm.zipCode}}</div>
+                                </div>
+
+                                <button class="buttonPlus cmpListCarsStores" ng-click='cx.showAssets(itm)' ng-show="itm.assets.length > 0">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="cmpListCarsStores" ng-show='itm.expand == true' style="margin-top: 6px;height:0px;position: relative;margin-left: calc(50% - 40px);margin-bottom:-4px;position: relative;">
+                                <div class="carsAvailable">{{itm.assets.length}} Cars Available</div>
+                            </div>
+
+                            <div class="cmpListCarsStores" ng-show='itm.expand == true' style="border-top: 1px solid rgba(255, 255, 255, 0.16);padding: 10px;padding-top: 20px;margin-top: 14px;"
+                                ng-show="itm.assets.length > 0">
+                                <div ng-repeat="ass in itm.assets" id="{{ ass }}" style="margin-bottom: 12px;" draggable item="ass">
+                                    <div layout="row" class="itmAsset">
+                                        <div flex layout="column" style="    padding: 10px;">
+                                            <img ng-show="ass.details.photo != 'assets/noPhoto.jpg'" class="imageItmAsset" ng-src="{{ass.details.photo}}" />
+                                            <div ng-show="ass.details.photo == 'assets/noPhoto.jpg'" style="overflow: hidden;margin-bottom: 11px;border-bottom: 4px solid #288aab;text-align: center;max-height: 89px;margin-top: -9px;margin-left: -10px;margin-right: -10px;background-color: #eeeeee;">
+                                                <img class="imageItmAsset" ng-src="{{ass.details.photo}}" style="margin-top: -11px;border-bottom: 0px;height: 122px;max-height: 110px;"
+                                                />
+                                            </div>
+                                            <div layout="row" style="margin-bottom: 2px;   ">
+                                                <div flex style="font-weight: 700;font-size: 13px;margin-bottom: 10px;">{{ass.details.name}}</div>
+
+                                                <button ng-click="cx.showDetails(ass)" class="btn btn-default btInfo" type="button" style="z-index: 999999;border-radius: 31px;border: 0px;margin-top: -28px;margin-right: -3px;background-color: #2d9fc3;height: 31px;color: #FFFFFF;outline: none;box-shadow: 1px 1px 4px #33333378;">
+                                                    <i class="fa fa-info" aria-hidden="true"></i>
+                                                </button>
+
+                                            </div>
+                                            <div layout="row" style="font-size: 11px;margin-right: 5px;margin-top:-5px;">
+                                                <div flex>{{ass.details.year}}</div>
+                                                <div>{{ass.details.doors}} doors</div>
+                                            </div>
+                                            <div style="text-align: right;font-size: 12px;font-weight: 700;margin-top: 8px;margin-right: 5px;color: #4d7784;">{{ass.details.price | currency:"U$ "}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div flex style="overflow: hidden;" class="boxClients">
+                <div flex layout="column">
+                    <i class="fa fa-male" aria-hidden="true" style="    font-size: 35px;text-align: center;"></i>
+                    <div flex layout="row" style="margin-left: 10px;margin-right: 10px;margin-top: 8px;margin-top: 8px;border-bottom: 1px solid #FFFFFF;padding-bottom: 8px;">
+                        <div flex style="font-weight: 600;text-align:center;padding-left: 25px;">Clients</div>
+                        <button style="border: 0px;background-color: #566a7d00;" ng-click="cx.addClients()">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div style="height: calc(100vh - 188px); overflow: auto;">
+                    <div class="placeClient" ng-mouseover="itm.showOpt = true" ng-mouseout="itm.showOpt = false" ng-repeat="itm in cx.listParts | filter:'client'"
+                        style="    border-radius: 5px;background-color: #213140; margin:10px; margin-bottom: 12px;" bin="itm"
+                        id="{{ itm }}" style="margin-bottom: 12px;" droppable drop="cx.handleDrop" habDrop="itm">
+                        <div layout="column" class="boxItm">
+                            <div ng-show="itm.showOpt == true" style="position: relative;    margin-left: calc(100% - 39px); margin-top: -21px;height: 21px;">
+                                <div class="boxOptions" style="font-size: 11px;overflow: hidden;">
+                                    <button class="buttonPlus" ng-click="cx.editPart(itm)">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </button>
+                                    <button class="buttonPlus" ng-click='cx.removePart(itm)'>
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div flex layout="row">
+                                <img style="    margin-top: -5px;width: 40px;max-width: 40px;max-height: 40px;margin-left: 1px;    border:2px solid #6c6d6f42;height: 40px;"
+                                    ng-src="{{itm.photo}}" />
+                                <div layout="column" flex style="padding-left: 8px;    margin-top: -8px;max-height: 41px;">
+                                    <div flex style="font-weight: 600;font-size: 13px;margin-top: 2px;margin-bottom: 9px;">{{itm.name}}</div>
+                                    <div flex style="font-size: 11px;color: #2d9fc3;">
+                                        <img ng-src="{{itm.urlFlag}}" style="height: 20px;margin-right: 5px;margin-top: -3px;" />{{itm.zipCode}}</div>
+                                </div>
+
+                                <button class="buttonPlus cmpListCarsClients" ng-click='cx.showAssets(itm)' ng-show="itm.assets.length > 0">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="cmpListCarsClients" ng-show='itm.expand == true' style="margin-top: 6px;height:0px;position: relative;margin-left: calc(50% - 40px);margin-bottom:-4px;position: relative;">
+                                <div class="carsAvailable">{{itm.assets.length}} Cars Available</div>
+                            </div>
+
+                            <div class="cmpListCarsClients" ng-show='itm.expand == true' style="border-top: 1px solid rgba(255, 255, 255, 0.16);padding: 10px;padding-top: 20px;margin-top: 14px;"
+                                ng-show="itm.assets.length > 0">
+                                <div ng-repeat="ass in itm.assets" id="{{ ass }}" style="margin-bottom: 12px;" draggable item="ass">
+                                    <div layout="row" class="itmAsset">
+                                        <div flex layout="column" style="    padding: 10px;">
+                                            <img ng-show="ass.details.photo != 'assets/noPhoto.jpg'" class="imageItmAsset" ng-src="{{ass.details.photo}}" />
+                                            <div ng-show="ass.details.photo == 'assets/noPhoto.jpg'" style="overflow: hidden;margin-bottom: 11px;border-bottom: 4px solid #288aab;text-align: center;max-height: 89px;margin-top: -9px;margin-left: -10px;margin-right: -10px;background-color: #eeeeee;">
+                                                <img class="imageItmAsset" ng-src="{{ass.details.photo}}" style="margin-top: -11px;border-bottom: 0px;height: 122px;max-height: 110px;"
+                                                />
+                                            </div>
+                                            <div layout="row" style="margin-bottom: 2px;   ">
+                                                <div flex style="font-weight: 700;font-size: 13px;margin-bottom: 10px;">{{ass.details.name}}</div>
+
+                                                <button ng-click="cx.showDetails(ass)" class="btn btn-default btInfo" type="button" style="z-index: 999999;border-radius: 31px;border: 0px;margin-top: -28px;margin-right: -3px;background-color: #2d9fc3;height: 31px;color: #FFFFFF;outline: none;box-shadow: 1px 1px 4px #33333378;">
+                                                    <i class="fa fa-info" aria-hidden="true"></i>
+                                                </button>
+
+                                            </div>
+                                            <div layout="row" style="font-size: 11px;margin-right: 5px;margin-top:-5px;">
+                                                <div flex>{{ass.details.year}}</div>
+                                                <div>{{ass.details.doors}} doors</div>
+                                            </div>
+                                            <div style="text-align: right;font-size: 12px;font-weight: 700;margin-top: 8px;margin-right: 5px;color: #4d7784;">{{ass.details.price | currency:"U$ "}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="width: 0px;">
+            <div class="cmpDetails" ng-show="cx.showDetailAssets == true" style="overflow: hidden;height: 350px;background-color: #FFFFFF;position: relative;bottom: 324px;left: -41px;width: calc(100vw - 262px);    border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px; box-shadow: 2px -5px 33px #151414;z-index:99999999">
+
+                <div style="height:0px;">
+                    <button ng-click="cx.hideDetails()" class="btn btn-default btInfo" type="button" style="padding-left: 10px;position: relative;z-index: 999999;border-radius: 31px;border: 0px;margin-top: -28px;margin-right: -3px;background-color: #2d9fc3;height: 31px;color: #FFFFFF;outline: none;box-shadow: 1px 1px 4px #33333378;top: 25px;left: calc(100% - 43px);min-width: 31px;width: 31px;">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div flex layout="row" style="margin-left: 15px;margin-top: 10px;margin-bottom: 19px;">
+                    <i class="fa fa-car" aria-hidden="true" style="    font-size: 27px;color: #2d9fc361;margin-right: 8px;padding-top: 4px;"></i>
+                    <div style="    text-align: center;font-weight: bold;font-size: 20px;    margin-top: 4px;color: #565454;">Car Detail</div>
+                </div>
+                <div layout="row" style="    margin-left: 20px;">
+                    <div class="localFields" style="    color: #424344;    width: 228px;margin-left: 5px;">
+                        <div layout="row">
+                            <img class="cmpPhotoPart" style="width:100px; height: 100px; border-radius: 3px;" ng-src="{{cx.carSelected.details.photo}}" />
+
+                            <div id="qrcode" style="    padding-left: 15px;"></div>
+                        </div>
+
+                        <div class="labelForm">Model</div>
+                        <div style="width: 100px;">{{cx.carSelected.details.name}}</div>
+
+                        <div layout="row">
+                            <div flex>
+                                <div class="labelForm">Year</div>
+                                <div style="width: 100px;">{{cx.carSelected.details.year}}</div>
+                            </div>
+
+                            <div>
+                                <div class="labelForm">Doors</div>
+                                <div style="width: 100px;">{{cx.carSelected.details.doors}} doors</div>
+                            </div>
+                        </div>
+
+                        <div class="labelForm">Price</div>
+                        <div layout="row">
+                            <div flex style="width: 100px;font-weight: 700;font-size: 18px;">{{cx.carSelected.details.price | currency:'U$ '}}</div>
+                        </div>
+
+                    </div>
+                    <div layout="row" style="    margin-left: 17px;border-left: 1px solid #7677771f;width: 276px;height: 300px;margin-top: -34px;">
+                        <div layout="column" style="width: 227px;    color: #333333;text-align: right;">
+                            <div flex layout="row" style="height: 70px;">
+                                <div flex layout="row" class="box_0">
+                                    <div flex class="boxInfoTimeline">
+                                        <div layout="row" layout-align="end">
+                                            <div class="labelNameTimeline">{{cx.getAssetHistory(0).name}}</div>
+                                            <img ng-src="{{cx.getAssetHistory(0).urlFlag}}" style="height: 20px;margin-right: 5px;    margin-top: 0px;margin-left: 3px;"
+                                            />
+                                        </div>
+                                        <div class="labelZipTimeline">{{cx.getDateHistory(0) | date:"dd-MM-yyyy HH:mm"}}</div>
+                                    </div>
+                                    <img class="imgTimeLine" ng-src="{{cx.getAssetHistory(0).photo}}" />
+                                </div>
+                                <div class="boxTimeline boxTime_0">
+                                    <i class="fa fa-industry icoTime" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div layout="row" style="height: 70px;">
+                                <div flex layout="row" class="box_1">
+                                    <div flex class="boxInfoTimeline" style="    margin-top: 7px;">
+                                        <div layout="row" layout-align="end">
+                                            <div class="labelNameTimeline">{{cx.getAssetHistory(1).name}}</div>
+                                            <img ng-src="{{cx.getAssetHistory(1).urlFlag}}" style="height: 20px;margin-right: 5px;    margin-top: 0px;margin-left: 3px;"
+                                            />
+                                        </div>
+                                        <div class="labelZipTimeline">{{cx.getDateHistory(1) | date:"dd-MM-yyyy HH:mm"}}</div>
+                                    </div>
+                                    <img class="imgTimeLine" ng-src="{{cx.getAssetHistory(1).photo}}" style="    margin-top: 9px;" />
+                                </div>
+
+                                <div class="boxTimeline boxTime_1" style="margin-top: 4px;">
+                                    <i class="fa fa-building icoTime" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div flex layout="row" style="height: 70px;">
+                                <div flex layout="row" class="box_2">
+                                    <div flex class="boxInfoTimeline" style="    margin-top: 23px;">
+                                        <div layout="row" layout-align="end">
+                                            <div class="labelNameTimeline">{{cx.getAssetHistory(2).name}}</div>
+                                            <img ng-src="{{cx.getAssetHistory(2).urlFlag}}" style="height: 20px;margin-right: 5px;    margin-top: 0px;margin-left: 3px;"
+                                            />
+                                        </div>
+                                        <div class="labelZipTimeline">{{cx.getDateHistory(2) | date:"dd-MM-yyyy HH:mm"}}</div>
+                                    </div>
+                                    <img class="imgTimeLine" ng-src="{{cx.getAssetHistory(2).photo}}" style="    margin-top: 24px;" />
+                                </div>
+
+                                <div class="boxTimeline boxTime_2" style="margin-top: 20px;">
+                                    <i class="fa fa-car icoTime" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div flex layout="row" style="height: 70px;">
+                                <div flex layout="row" class="box_3">
+                                    <div flex class="boxInfoTimeline" style="    margin-top: 33px;">
+                                        <div layout="row" layout-align="end">
+                                            <div class="labelNameTimeline">{{cx.getAssetHistory(3).name}}</div>
+                                            <img ng-src="{{cx.getAssetHistory(3).urlFlag}}" style="height: 20px;margin-right: 5px;    margin-top: 0px;margin-left: 3px;"
+                                            />
+                                        </div>
+                                        <div class="labelZipTimeline">{{cx.getDateHistory(3) | date:"dd-MM-yyyy HH:mm"}}</div>
+                                    </div>
+                                    <img class="imgTimeLine" ng-src="{{cx.getAssetHistory(3).photo}}" style="    margin-top: 34px;" />
+                                </div>
+                                <div class="boxTimeline boxTime_3" style="margin-top: 29px;">
+                                    <i class="fa fa-male icoTime" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 10px;background-color: #e8edef;height: 100%;">
+                            <div class="cmpLineTime" style="width: 10px;background-color: #2d9fc3;height: 0;"></div>
+                        </div>
+                    </div>
+                    <div flex style="height:350px; width:100%; margin-top: -61px;margin-right: -46px;">
+                        <div id="mapDetail" style="height:350px; width:100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="cx.showAddCar == true" style="position: absolute;background-color: #FFFFFF;padding: 50px;transform: translate(-50%,-50%);top: 50%;left: 58%;    z-index: 9999999;box-shadow: 2px 2px 12px #433333;border-radius: 3px;">
+        <div class="fileupload" style="display:none">
+            <input class="cmpUploadCar" type="file" />
+        </div>
+
+        <div flex layout="row" style="margin-bottom: 15px;    margin-top: -20px;">
+            <i class="fa fa-car" aria-hidden="true" style="    font-size: 27px;color: #2d9fc361;margin-right: 8px;padding-top: 4px;"></i>
+            <div style="    text-align: center;font-weight: bold;font-size: 20px;    margin-top: 4px;color: #565454;">Add New Car</div>
+        </div>
+
+        <div class="localFields" style="    color: #424344;">
+
+            <div class="labelForm">Photo</div>
+            <div layout="row">
+                <input ng-model="cx.photoCar" style="width: 359px;">
+            </div>
+
+            <div class="labelForm">Model
+                <i style='margin-left: 5px;font-size: 9px;color: #2d9fc3;' class="fa fa-asterisk icoRequired"></i>
+            </div>
+            <input ng-model="cx.nameCar" style="width: 359px;">
+
+            <div class="labelForm">Code
+                <i style='margin-left: 5px;font-size: 9px;color: #2d9fc3;' class="fa fa-asterisk icoRequired"></i>
+            </div>
+            <div>
+                <input ng-model="cx.codeCar" style="width: 100px;" ng-blur="cx.verifyCar()" maxlength="8">
+                <div ng-show="cx.codeUsed == true">Code used</div>
+            </div>
+            
+
+            <div layout="row">
+                <div flex>
+                    <div class="labelForm">Year
+                        <i style='margin-left: 5px;font-size: 9px;color: #2d9fc3;' class="fa fa-asterisk icoRequired"></i>
+                    </div>
+                    <input type="number" ng-model="cx.yearCar" style="width: 100px;">
+                </div>
+
+                <div>
+                    <div class="labelForm">Doors
+                        <i style='margin-left: 5px;font-size: 9px;color: #2d9fc3;' class="fa fa-asterisk icoRequired"></i>
+                    </div>
+                    <input type="number" ng-model="cx.doorsCar" style="width: 100px;">
+                </div>
+            </div>
+
+            <div class="labelForm">Price
+                <i style='margin-left: 5px;font-size: 9px;color: #2d9fc3;' class="fa fa-asterisk icoRequired"></i>
+            </div>
+            <input type="number" ng-model="cx.priceCar" style="width: 100px;">
+
+            <div class="labelInput" style='    font-size: 11px;color: #2d9fc3;text-align: left;font-weight: 700;margin-top: 14px;margin-left: -5px;'>
+                <i style='margin-left: 5px;font-size: 11px;color: #2d9fc3;' class="fa fa-asterisk icoObrigatorio"></i> Fields required
+            </div>
+
+            <div layout="row" style="margin-top: 18px;">
+                <button ng-disabled="cx.verifyFields()" ng-click="cx.saveCar()" class="buttomApp" style="    margin-right: 10px;width: 100px;"
+                    title="Click to save">Save car</button>
+                <button ng-click="cx.cancelCar()" class="buttomApp" title="Click to cancel" style="width: 100px;">Cancel</button>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div ng-show="cx.showAddPart == true" style="position: absolute;background-color: #FFFFFF;padding: 50px;transform: translate(-50%,-50%);top: 50%;left: 58%;    z-index: 9999999;box-shadow: 2px 2px 12px #433333;border-radius: 3px;">
+        <div class="fileupload" style="display:none">
+            <input class="cmpUploadPart" type="file" />
+        </div>
+
+
+
+
+        <div ng-show="cx.showWaitingEdit == false" flex layout="row" style="margin-bottom: 15px;    margin-top: -20px;">
+            <i ng-class="cx.icoIncludePart" aria-hidden="true" style="    font-size: 27px;color: #2d9fc361;margin-right: 8px;padding-top: 4px;"></i>
+            <div style="    text-align: center;font-weight: bold;font-size: 20px;    margin-top: 4px;color: #565454;">{{cx.textIncludePart}}</div>
+        </div>
+
+        <div flex ng-show="cx.showWaitingEdit == true" layout="row" style="text-align: center;height:170px;background-color: #FFFFFF;left: 200px;width: 200px;z-index: 99999;">
+            <div style="    width: 50px;height: 39px;border-radius: 50px;transform: translate(-50%,-50%);top: 50%;margin-top: -23px;left: 50%;position: relative;">
+                <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true" style="color: #2d9fc3;font-size: 49px;"></i>
+                <div class="loadingText" style="opacity: 0; margin-left: -53px;    width: 153px;">{{cx.textWaitingEdit}}</div>
+            </div>
+        </div>
+
+        <div flex ng-show="cx.showWaitingEdit == false" class="localFields" style="    color: #424344;">
+
+            <div class="labelForm">Photo</div>
+            <div layout="row">
+                <img class="cmpPhotoPart" style="border: 2px solid #FFFFFF;width:100px; height: 100px;    border: 1px solid #263f57;  border-radius: 3px;"
+                    ng-src="{{cx.photoPart}}" />
+                <button style="height: 39px;margin-top: 61px; margin-left: 10px;max-width: 125px;" class="buttomApp" ng-click="cx.addPhotoPart()">
+                    <i class="fa fa-camera" aria-hidden="true" style="margin-right: 10px;"></i>Select photo</button>
+            </div>
+
+
+            <div class="labelForm">Name
+                <i style='margin-left: 5px;font-size: 9px;color: #2d9fc3;' class="fa fa-asterisk icoRequired"></i>
+            </div>
+            <input ng-model="cx.namePart" style="width: 359px;">
+
+            <div class="labelForm">Zip Code
+                <i style='margin-left: 5px;font-size: 9px;color: #2d9fc3;' class="fa fa-asterisk icoRequired"></i>
+            </div>
+
+            <div layout="row">
+                <input ng-model="cx.zipCodePart" style="width: 100px;" ng-blur="cx.findZipCode()">
+                <div style="padding-top: 7px;padding-left: 6px;">
+                    <i class="fa fa-circle-o-notch fa-spin cmpWaitingMaps" aria-hidden="true" style="color: #2d9fc3;font-size: 18px;"></i>
+                </div>
+            </div>
+
+            <div layout="row" ng-show="cx.addressMaps != ''">
+                <img ng-src="{{cx.urlFlag}}" style="height: 34px;border-radius: 3px;margin-right: 5px;margin-top: 4px;" />
+                <div style="    margin-top: 11px;font-size: 13px;">{{cx.addressMaps}}</div>
+            </div>
+
+            <div class="labelInput" style='    font-size: 11px;color: #2d9fc3;text-align: left;font-weight: 700;margin-top: 14px;margin-left: -5px;'>
+                <i style='margin-left: 5px;font-size: 11px;color: #2d9fc3;' class="fa fa-asterisk icoObrigatorio"></i> Fields required
+            </div>
+
+            <div layout="row" style="margin-top: 18px;">
+                <button ng-disabled="cx.verifyFieldsParts()" ng-click="cx.savePart()" class="buttomApp" style="    margin-right: 10px;width: 100px;"
+                    title="Click to save">Save Part</button>
+                <button ng-click="cx.cancelPart()" class="buttomApp" title="Click to cancel" style="width: 100px;">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
