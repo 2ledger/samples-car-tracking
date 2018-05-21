@@ -1,5 +1,5 @@
 module.exports = function(app) {
-	var tracking = app.controllers.trackingController;
+	var tracking = app.controllers.carTrackingController;
 
 	app.get('/getToken', tracking.getToken);
 	app.get('/getAllParts', tracking.getAllParts);
