@@ -2,7 +2,7 @@
 
 # Sample Car Tracking Project
 
-This project aims to demonstrate the operation of a simple car tracking using the [2Ledger](http://www.2ledger.com/) blockchain platform API. It's available on [http://demo.2ledger.com/registry](http://demo.2ledger.com/registry).
+This project aims to demonstrate the operation of a simple car tracking using the [2Ledger](http://www.2ledger.com/) blockchain platform API. It's available on [http://demo.2ledger.com/tracking](http://demo.2ledger.com/tracking).
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
