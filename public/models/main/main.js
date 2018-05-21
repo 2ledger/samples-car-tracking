@@ -1185,7 +1185,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
     me.getToken = function () {
         var rest = {
             method: 'GET',
-            url: "/carTracking/getToken/",
+            url: "/tracking/getToken/",
             headers: { 'Content-Type': 'application/json' },
         }
 
