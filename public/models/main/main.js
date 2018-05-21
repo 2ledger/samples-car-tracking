@@ -203,7 +203,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'GET',
-            url: "/carTracking/getAllParts",
+            url: "/tracking/getAllParts",
             headers: { 'Content-Type': 'application/json' },
         }
 
@@ -489,7 +489,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'POST',
-            url: "/carTracking/moveCar",
+            url: "/tracking/moveCar",
             headers: { 'Content-Type': 'application/json' },
             data: {
                 data: {
@@ -998,7 +998,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'GET',
-            url: "/carTracking/verifyCar/" + me.codeCar,
+            url: "/tracking/verifyCar/" + me.codeCar,
             headers: { 'Content-Type': 'application/json' }
         }
 
@@ -1031,7 +1031,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'POST',
-            url: "/carTracking/saveCar",
+            url: "/tracking/saveCar",
             headers: { 'Content-Type': 'application/json' },
             data: {
                 data: {
@@ -1078,7 +1078,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'DELETE',
-            url: "/carTracking/deletePart",
+            url: "/tracking/deletePart",
             headers: { 'Content-Type': 'application/json' },
             data: {
                 id: ind.id,
@@ -1149,7 +1149,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'POST',
-            url: "/carTracking/savePart",
+            url: "/tracking/savePart",
             headers: { 'Content-Type': 'application/json' },
             data: {
                 id: me.idPart,
