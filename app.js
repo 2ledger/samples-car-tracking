@@ -22,6 +22,11 @@ app.use(bodyParser.text());
 global.env = cfg.env;
 global.cfg = cfg;
 
+app.use(function(req, res, next) {
+    console.info(req.url);
+    next();
+});
+
 load('models')
     .then('controllers')
     .then('models')
