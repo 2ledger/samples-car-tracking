@@ -140,8 +140,7 @@ body{
 }
 
 .error{
-    position: absolute;
-    height: 100px;    
+    position: absolute;   
     background-color: #b94343;
     left: calc(50% - 44px);
     width: 281px;

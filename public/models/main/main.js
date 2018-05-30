@@ -203,7 +203,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'GET',
-            url: "/tracking/getAllParts",
+            url: "/getAllParts",
             headers: { 'Content-Type': 'application/json' },
         }
 
@@ -489,7 +489,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'POST',
-            url: "/tracking/moveCar",
+            url: "/moveCar",
             headers: { 'Content-Type': 'application/json' },
             data: {
                 data: {
@@ -818,7 +818,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'GET',
-            url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + me.zipCodePart + "&key=" + me.apiMapsKey,
+            url: "https://maps.googleapis.com/maps/api/geocode/json?addresss=" + me.zipCodePart + "&key=" + me.apiMapsKey,
             headers: { 'Content-Type': 'application/json' }
         }
 
@@ -855,6 +855,10 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
             $('.cmpWaitingMaps').css({ display: 'none' });
 
         }, function (err) {
+            me.showError(err.data.error_message);
+
+            me.showWaitingMaps = false;
+            $('.cmpWaitingMaps').css({ display: 'none' });
 
             console.log(err);
         });
@@ -998,7 +1002,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'GET',
-            url: "/tracking/verifyCar/" + me.codeCar,
+            url: "/verifyCar/" + me.codeCar,
             headers: { 'Content-Type': 'application/json' }
         }
 
@@ -1011,7 +1015,8 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
             me.verifyingCar = false;
         }, function (err) {
-
+            me.verifyingCar = true;
+            me.showError(err.data.error_message);
             console.log(err);
         });
     }
@@ -1031,7 +1036,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'POST',
-            url: "/tracking/saveCar",
+            url: "/saveCar",
             headers: { 'Content-Type': 'application/json' },
             data: {
                 data: {
@@ -1066,7 +1071,8 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
             me.getAllParts();
 
         }, function (err) {
-
+            me.showWaiting = true;
+            me.showError(err.data.error_message);
             console.log(err);
         });
     }
@@ -1078,7 +1084,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'DELETE',
-            url: "/tracking/deletePart",
+            url: "/deletePart",
             headers: { 'Content-Type': 'application/json' },
             data: {
                 id: ind.id,
@@ -1091,7 +1097,8 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
             // me.clientRemove = null;
             // me.showAlert('Client successiful removed');
         }, function (err) {
-
+            me.showWaiting = true;
+            me.showError(err.data.error_message);
             console.log(err);
         });
     }
@@ -1149,7 +1156,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'POST',
-            url: "/tracking/savePart",
+            url: "/savePart",
             headers: { 'Content-Type': 'application/json' },
             data: {
                 id: me.idPart,
@@ -1177,7 +1184,9 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
             me.getAllParts();
 
         }, function (err) {
+            me.showError(err.data.error_message);
 
+            me.showWaitingEdit = false;
             console.log(err);
         });
     }
@@ -1185,7 +1194,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
     me.getToken = function () {
         var rest = {
             method: 'GET',
-            url: "/tracking/getToken/",
+            url: "/getToken/",
             headers: { 'Content-Type': 'application/json' },
         }
 
@@ -1200,6 +1209,8 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
             me.getAll();
 
         }, function (err) {
+            me.showError(err.data.error_message);
+            me.showWaiting = false;            
             console.log(err);
         });
     }
