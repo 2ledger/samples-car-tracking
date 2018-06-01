@@ -203,7 +203,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'GET',
-            url: "/getAllParts",
+            url: "getAllParts",
             headers: { 'Content-Type': 'application/json' },
         }
 
@@ -489,7 +489,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'POST',
-            url: "/moveCar",
+            url: "moveCar",
             headers: { 'Content-Type': 'application/json' },
             data: {
                 data: {
@@ -1002,7 +1002,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'GET',
-            url: "/verifyCar/" + me.codeCar,
+            url: "verifyCar/" + me.codeCar,
             headers: { 'Content-Type': 'application/json' }
         }
 
@@ -1036,7 +1036,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'POST',
-            url: "/saveCar",
+            url: "saveCar",
             headers: { 'Content-Type': 'application/json' },
             data: {
                 data: {
@@ -1084,7 +1084,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'DELETE',
-            url: "/deletePart",
+            url: "deletePart",
             headers: { 'Content-Type': 'application/json' },
             data: {
                 id: ind.id,
@@ -1156,7 +1156,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'POST',
-            url: "/savePart",
+            url: "savePart",
             headers: { 'Content-Type': 'application/json' },
             data: {
                 id: me.idPart,
@@ -1194,7 +1194,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
     me.getToken = function () {
         var rest = {
             method: 'GET',
-            url: "/getToken",
+            url: "getToken",
             headers: { 'Content-Type': 'application/json' },
         }
 
