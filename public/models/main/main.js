@@ -818,7 +818,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
         var rest = {
             method: 'GET',
-            url: "https://maps.googleapis.com/maps/api/geocode/json?addresss=" + me.zipCodePart + "&key=" + me.apiMapsKey,
+            url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + me.zipCodePart + "&key=" + me.apiMapsKey,
             headers: { 'Content-Type': 'application/json' }
         }
 
