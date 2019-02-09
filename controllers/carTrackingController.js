@@ -166,7 +166,7 @@ module.exports = function (app) {
 			var result = [];
 			var listCars = [];
 
-			chamadaGET('/entities/' + global.cfg.API_2LEDGER_SAMPLE_CLIENT_ENTITY_ID + '/records').then(d => {
+			chamadaGET('/networks/' + global.cfg.API_2LEDGER_SAMPLE_ID_NETWORK + '/entities/' + global.cfg.API_2LEDGER_SAMPLE_CLIENT_ENTITY_ID + '/records').then(d => {
 				if(JSON.parse(d).success == 'false'){
 					res.send({'error': JSON.parse(d).message});
 					return;
@@ -267,7 +267,7 @@ module.exports = function (app) {
 		savePart: function (req, res) {
 			var value = req.body.data;
 			value.status = 'active';
-			var obj = {};
+			var obj = {name: Math.random().toString(36).substring(8)};
 
 			chamadaPOST('/networks/' + global.cfg.API_2LEDGER_SAMPLE_ID_NETWORK + '/wallets', obj).then(d => {
 				if(JSON.parse(d).success == 'false'){
@@ -278,7 +278,7 @@ module.exports = function (app) {
 				value.stock = JSON.parse(d).response[0].address;
 				value.sample = 'CAR_TRACKING'
 				var obj = { key: req.body.id, value: value };
-				chamadaPOST('/entities/' + global.cfg.API_2LEDGER_SAMPLE_CLIENT_ENTITY_ID + '/records', obj).then(d => {
+				chamadaPOST('/networks/' + global.cfg.API_2LEDGER_SAMPLE_ID_NETWORK + '/entities/' + global.cfg.API_2LEDGER_SAMPLE_CLIENT_ENTITY_ID + '/records', obj).then(d => {
 					if(JSON.parse(d).success == 'false'){
 						res.send({'error': JSON.parse(d).message});
 						return;
@@ -326,7 +326,7 @@ module.exports = function (app) {
 			value.status = 'inactive';
 
 			var obj = { key: req.body.id, value: value };
-			chamadaPOST('/entities/' + global.cfg.API_2LEDGER_SAMPLE_CLIENT_ENTITY_ID + '/records', obj).then(d => {
+			chamadaPOST('/networks/' + global.cfg.API_2LEDGER_SAMPLE_ID_NETWORK + '/entities/' + global.cfg.API_2LEDGER_SAMPLE_CLIENT_ENTITY_ID + '/records', obj).then(d => {
 				if(JSON.parse(d).success == 'false'){
 					res.send({'error': JSON.parse(d).message});
 					return;
