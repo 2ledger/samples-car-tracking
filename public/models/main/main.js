@@ -462,7 +462,7 @@ function main($scope, $http, $rootScope, $timeout, $filter, ngTableParams, $loca
 
                 walletFrom = tp1.stock;
                 walletTo = bin.stock;
-                car = me.listAssets[t].name;
+                car = me.listAssets[t].fullname;
 
                 if (tp1.type == 'factory') {
                     me.contAnim = 0;
