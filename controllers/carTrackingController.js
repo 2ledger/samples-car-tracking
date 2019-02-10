@@ -210,8 +210,8 @@ module.exports = function (app) {
 						car.details = det;
 
 						if (car.details.hasOwnProperty('idFactory') && car.details.hasOwnProperty('date')) {
-							if (!objCars[car.fullname]) {
-								objCars[car.fullname] = car;
+							if (!objCars[car.name]) {
+								objCars[car.name] = car;
 							}
 						}
 					}
