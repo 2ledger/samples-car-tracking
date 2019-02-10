@@ -376,7 +376,7 @@ module.exports = function (app) {
 					"to": value.idWalletFactory,
 					"qty": 1,
 					"comment": JSON.parse(d).response.fullname,
-					"asset": JSON.parse(d).response.fullname
+					"asset": JSON.parse(d).response.name
 				}
 
 				chamadaPOST('/networks/' + global.cfg.API_2LEDGER_SAMPLE_ID_NETWORK + '/wallets/' + idWallet + '/transactions', obj).then(d => {
